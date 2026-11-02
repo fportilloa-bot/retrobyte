@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instituto Retro Byte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Cinzel:wght@600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div id="boot" aria-live="polite">
+    <div class="boot-logo glitch" data-text="RETRO BYTE">RETRO BYTE</div>
+    <p class="boot-coin">INSERT COIN</p>
+    <div class="boot-bar"><i></i></div>
+    <p class="boot-msg">Cargando niveles... (toca para saltar)</p>
+  </div>
+
+  <div class="crt" aria-hidden="true"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <div class="logo glitch" data-text="RETRO BYTE">RETRO BYTE</div>
+    <div class="prefs">
+      <button id="themeBtn" type="button" aria-label="Cambiar tema claro u oscuro" title="Tema claro / oscuro">☀️</button>
+      <button id="fsDown" type="button" aria-label="Reducir letra" title="Letra más pequeña">A−</button>
+      <button id="fsUp" type="button" aria-label="Aumentar letra" title="Letra más grande">A+</button>
+    </div>
+    <button id="menuBtn" class="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">☰</button>
+    <nav id="nav"></nav>
+  </header>
+
+  <div class="marquee"><span>★ MATRÍCULA ABIERTA ★ 3 CURSOS GRATIS: NETBEANS · FUNDAMENTOS DE LA WEB · PYTHON ARCADE ★ INSERTA UNA MONEDA PARA COMENZAR ★ NOTA MÍNIMA 70 ★</span></div>
+
+  <main id="app">
+
+    <!-- INICIO -->
+    <section class="screen active" id="home">
+      <h1 id="heroTitle" class="cursor"></h1>
+      <p class="lead">Somos una academia digital donde aprender se siente como jugar. Regístrate, estudia, pasa el examen y gana tu diploma.</p>
+      <div class="actions">
+        <button class="btn pink" data-go="register">▶ Registrarme</button>
+        <button class="btn cyan" data-go="login">Ya tengo cuenta</button>
+      </div>
+
+      <h2>Quiénes somos</h2>
+      <div class="cards mv">
+        <article class="card">
+          <div class="sprite">🎯</div><h3>Misión</h3>
+          <p>Formar a personas en tecnología con cursos prácticos, gratuitos y divertidos, que combinan teoría, laboratorios en vivo y evaluación real para desarrollar habilidades útiles en el mundo digital.</p>
+        </article>
+        <article class="card">
+          <div class="sprite">🔭</div><h3>Visión</h3>
+          <p>Ser una academia digital reconocida en Centroamérica por hacer que aprender programación se sienta como jugar, y por impulsar a cada estudiante a crear sus propios proyectos.</p>
+        </article>
+        <article class="card">
+          <div class="sprite">💎</div><h3>Valores</h3>
+          <p>Curiosidad, constancia, honestidad académica, trabajo colaborativo y aprendizaje con diversión.</p>
+        </article>
+      </div>
+
+      <h2>Cursos disponibles</h2>
+      <div class="cards" id="homeCards"></div>
+
+      <h2>Preguntas frecuentes</h2>
+      <div class="faq">
+        <details><summary>¿Los cursos tienen costo?</summary><p>No. Los 3 cursos son gratuitos: solo debes registrarte.</p></details>
+        <details><summary>¿Cómo obtengo mi diploma?</summary><p>Completa todas las lecciones del curso, aprueba la evaluación con 70 o más y el diploma se genera automáticamente. Lo encuentras en la sección «Diplomas».</p></details>
+        <details><summary>¿Cuánto dura la vigencia del diploma?</summary><p>La define la administración (por defecto 365 días). Cuando vence, puedes volver a presentar la evaluación para obtener uno nuevo.</p></details>
+        <details><summary>¿Qué pasa si repruebo la evaluación?</summary><p>Debes esperar unos minutos y puedes intentarlo de nuevo. Cada intento trae preguntas distintas y la pantalla de resultados te indica qué temas repasar.</p></details>
+        <details><summary>¿Qué pasa si recargo la página durante el examen?</summary><p>Tu examen se conserva: vuelves a las mismas preguntas, con tus respuestas y el mismo reloj. Si el tiempo se acaba mientras estás fuera, se califica automáticamente.</p></details>
+        <details><summary>Quiero cambiar mis datos u olvidé mi contraseña</summary><p>Si ya ingresaste, ve a «Mi ficha» y envía una solicitud de cambio. Si olvidaste tu contraseña, usa el enlace «¿Olvidaste tu contraseña?» en la pantalla de ingreso. El administrador revisará tu solicitud.</p></details>
+        <details><summary>¿Cómo verifico que un diploma es auténtico?</summary><p>Entra a «Verificar», escribe el folio del diploma (por ejemplo RB-1730000000000) y verás su estado.</p></details>
+      </div>
+
+      <h2>Contacto</h2>
+      <div class="panel center contact">
+        <p>📧 admin@retrobyte.edu</p>
+        <p>📍 Guatemala, Centroamérica</p>
+        <p>🕒 Lunes a viernes, 8:00 a 17:00</p>
+      </div>
+    </section>
+
+    <!-- REGISTRO -->
+    <section class="screen" id="register">
+      <h2>Nuevo jugador</h2>
+      <form id="registerForm" class="panel" novalidate>
+        <div class="grid">
+          <label>Nombre<input name="name" required minlength="2"></label>
+          <label>Apellido<input name="lastname" required minlength="2"></label>
+          <label>Correo<input name="email" type="email" required></label>
+          <label>Edad<input name="age" type="number" min="10" max="99" required></label>
+          <label>País
+            <select name="country" required>
+              <option value="">-- elige --</option>
+              <option>Guatemala</option><option>México</option><option>El Salvador</option>
+              <option>Honduras</option><option>Costa Rica</option><option>Otro</option>
+            </select>
+          </label>
+          <label>Usuario (letras, números o _)
+            <input name="username" required pattern="[A-Za-z][A-Za-z0-9_]{2,19}" title="3 a 20 caracteres: letras, números o guion bajo. Debe empezar con letra." autocomplete="username">
+          </label>
+          <label>Contraseña
+            <span class="pw">
+              <input name="password" type="password" required minlength="4" autocomplete="new-password">
+              <button type="button" class="eye" data-eye aria-label="Mostrar contraseña">👁</button>
+            </span>
+          </label>
+        </div>
+        <p class="msg" id="registerMsg" aria-live="polite"></p>
+        <button class="btn pink" type="submit">Guardar y continuar</button>
+      </form>
+    </section>
+
+    <!-- LOGIN -->
+    <section class="screen" id="login">
+      <h2>Ingresar</h2>
+      <form id="loginForm" class="panel narrow">
+        <label>Usuario<input name="username" required autocomplete="username"></label>
+        <label>Contraseña
+          <span class="pw">
+            <input name="password" type="password" required autocomplete="current-password">
+            <button type="button" class="eye" data-eye aria-label="Mostrar contraseña">👁</button>
+          </span>
+        </label>
+        <p class="msg" id="loginMsg" aria-live="polite"></p>
+        <button class="btn cyan" type="submit">Entrar</button>
+      </form>
+      <p class="center"><button type="button" class="linkbtn" id="forgotBtn">¿Olvidaste tu contraseña?</button></p>
+      <form id="forgotForm" class="panel narrow hidden">
+        <h3>🔑 Recuperar contraseña</h3>
+        <p class="hint">Escribe tu usuario y el correo con el que te registraste. El administrador revisará tu solicitud y te dará una contraseña temporal.</p>
+        <label>Usuario<input name="username" required></label>
+        <label>Correo<input name="email" type="email" required></label>
+        <p class="msg" id="forgotMsg" aria-live="polite"></p>
+        <button class="btn pink" type="submit">📨 Enviar solicitud</button>
+      </form>
+    </section>
+
+    <!-- FICHA -->
+    <section class="screen" id="profile">
+      <h2>Ficha del estudiante</h2>
+      <div class="panel" id="profileData"></div>
+      <div class="panel center" id="badges"></div>
+      <div class="panel" id="profileEdit"></div>
+      <button class="btn pink" data-go="catalog">▶ Ir a mis cursos</button>
+    </section>
+
+    <!-- MIS CURSOS -->
+    <section class="screen" id="catalog">
+      <h2>Mis cursos</h2>
+      <div class="cards" id="catalogCards"></div>
+    </section>
+
+    <!-- CURSO -->
+    <section class="screen" id="course">
+      <button class="btn cyan" data-go="catalog">◀ Mis cursos</button>
+      <h2 id="courseTitle"></h2>
+      <div class="progress"><div id="courseBar"></div></div>
+      <p class="hint" id="courseStats"></p>
+      <div class="panel" id="courseGoal"></div>
+      <div class="course-layout">
+        <aside id="moduleTabs"></aside>
+        <article class="panel flip" id="moduleContent"></article>
+      </div>
+      <button class="btn yellow" id="toQuiz" data-go="quiz" disabled>Ir a la evaluación 🔒</button>
+    </section>
+
+    <!-- EVALUACIÓN -->
+    <section class="screen" id="quiz">
+      <h2 id="quizTitle">Evaluación final</h2>
+      <div class="timer" id="timerBox">
+        <div class="timer-bar"><i id="timerBar"></i></div>
+        <span id="timerTxt"></span>
+      </div>
+      <form id="quizForm" class="panel"></form>
+      <p class="msg" id="quizMsg" aria-live="polite"></p>
+      <button class="btn pink" id="submitQuiz" type="button">Enviar respuestas</button>
+    </section>
+
+    <!-- RESULTADO -->
+    <section class="screen" id="result">
+      <div class="panel center" id="resultBox"></div>
+      <div id="diploma" class="hidden"></div>
+      <div class="panel" id="review"></div>
+      <div class="actions">
+        <button class="btn cyan hidden" id="resPrint" data-act="print">🖨 Imprimir / Guardar PDF</button>
+        <button class="btn yellow" data-go="quiz">Reintentar</button>
+        <button class="btn pink" data-go="course">Repasar curso</button>
+        <button class="btn cyan" data-go="catalog">Mis cursos</button>
+      </div>
+    </section>
+
+    <!-- MIS DIPLOMAS -->
+    <section class="screen" id="mydiploma">
+      <h2>Mis diplomas</h2>
+      <div id="dipList"></div>
+    </section>
+
+    <!-- HISTORIAL -->
+    <section class="screen" id="history">
+      <h2>📜 Mi historial de intentos</h2>
+      <div class="stats" id="histStats"></div>
+      <div class="panel scroll"><table id="histTable"></table></div>
+      <div class="pager" id="pagerHist"></div>
+      <div class="panel hidden" id="histDetail"></div>
+    </section>
+
+    <!-- RANKING -->
+    <section class="screen" id="ranking">
+      <h2>🏆 Ranking de mejores notas</h2>
+      <p class="hint">Top 5 por curso (nombres abreviados). En caso de empate gana el menor tiempo.</p>
+      <div id="rankList"></div>
+    </section>
+
+    <!-- VERIFICAR DIPLOMA -->
+    <section class="screen" id="verify">
+      <h2>🔎 Verificar diploma</h2>
+      <form id="verifyForm" class="panel narrow">
+        <label>Folio del diploma (ej: RB-1730000000000)<input id="vFolio" required autocomplete="off"></label>
+        <button class="btn cyan" type="submit">Verificar</button>
+      </form>
+      <div id="verifyOut"></div>
+    </section>
+
+    <!-- PANEL ADMIN -->
+    <section class="screen" id="admin">
+      <h2>Panel de administración</h2>
+      <div class="tabs" id="adminTabs">
+        <button data-tab="summary" class="active">📊 Resumen</button>
+        <button data-tab="all">📋 Todos</button>
+        <button data-tab="pass">✅ Aprobados</button>
+        <button data-tab="fail">❌ Reprobados</button>
+        <button data-tab="answers">📝 Respuestas</button>
+        <button data-tab="users">👥 Estudiantes</button>
+        <button data-tab="requests">📨 Solicitudes<span id="reqBadge"></span></button>
+        <button data-tab="audit">🧾 Bitácora</button>
+        <button data-tab="charts">📈 Gráficos</button>
+        <button data-tab="settings">⚙ Ajustes</button>
+      </div>
+
+      <div id="paneSummary">
+        <div class="stats" id="adminStats"></div>
+        <p class="hint" id="demoHint"></p>
+      </div>
+
+      <div id="paneAnalysis" class="hidden">
+        <div class="panel"><h3>📊 Preguntas más falladas</h3><div id="analysis"></div></div>
+      </div>
+
+      <div id="paneList" class="hidden">
+        <div class="panel filters">
+          <label>Buscar (nombre, apellido, correo, usuario o nota)
+            <input id="fText" type="search" placeholder="ej: maria, gmail, 85...">
+          </label>
+          <label>Curso<select id="fCourse"></select></label>
+          <label>Usuario<select id="fUser"></select></label>
+          <label>Nota mín.<input id="fMin" type="number" min="0" max="100" placeholder="0"></label>
+          <label>Nota máx.<input id="fMax" type="number" min="0" max="100" placeholder="100"></label>
+          <button class="btn yellow" id="fClear" type="button">Limpiar</button>
+        </div>
+        <p class="hint" id="adminCount"></p>
+        <div class="panel scroll"><table id="adminTable"></table></div>
+        <div class="pager" id="pagerList"></div>
+        <div class="panel hidden" id="detailBox"></div>
+        <button class="btn cyan" id="csvFiltered" type="button">⬇ Descargar lo filtrado (Excel/CSV)</button>
+      </div>
+
+      <!-- ESTUDIANTES -->
+      <div id="paneUsers" class="hidden">
+        <div class="panel">
+          <label>Buscar estudiante (nombre, correo, usuario o país)
+            <input id="uText" type="search" placeholder="ej: maria, gmail, Guatemala...">
+          </label>
+        </div>
+        <div class="actions">
+          <button class="btn pink" id="addStudentBtn" type="button">➕ Agregar estudiante</button>
+        </div>
+        <p class="msg ok" id="userMsg" aria-live="polite"></p>
+        <p class="hint" id="userCount"></p>
+        <div class="panel scroll"><table id="userTable"></table></div>
+        <div class="pager" id="pagerUsers"></div>
+        <div class="panel hidden" id="userEdit"></div>
+        <button class="btn cyan" id="csvUsers" type="button">⬇ Descargar estudiantes (Excel/CSV)</button>
+      </div>
+
+      <!-- SOLICITUDES -->
+      <div id="paneRequests" class="hidden">
+        <p class="hint">Al aprobar, el estudiante podrá editar sus datos (incluida la contraseña) una vez. Si es una recuperación de contraseña, se genera una contraseña temporal que debes entregarle. También puedes editar datos directamente en la pestaña Estudiantes.</p>
+        <div class="panel scroll"><table id="reqTable"></table></div>
+        <div class="pager" id="pagerReq"></div>
+      </div>
+
+      <!-- BITÁCORA -->
+      <div id="paneAudit" class="hidden">
+        <p class="hint">Registro de los últimos 300 movimientos importantes (quién hizo qué y cuándo).</p>
+        <div class="panel scroll"><table id="auditTable"></table></div>
+        <div class="pager" id="pagerAudit"></div>
+      </div>
+
+      <div id="paneCharts" class="hidden"><div class="panel" id="charts"></div></div>
+
+      <div id="paneSettings" class="hidden">
+        <div class="panel settings">
+          <label>Vigencia del diploma (días)<input id="vDays" type="number" min="0" max="3650"></label>
+          <label>Espera tras reprobar (minutos)<input id="cMin" type="number" min="0" max="1440"></label>
+          <button class="btn cyan" id="vSave" type="button">Guardar ajustes</button>
+          <p class="msg ok" id="vMsg"></p>
+        </div>
+
+        <div class="panel center">
+          <h3>🧪 Datos de demostración</h3>
+          <p class="hint">Crea 8 estudiantes ficticios (usuarios <b>demo_ana</b>, <b>demo_luis</b>, etc., contraseña <b>demo1234</b>) con exámenes aprobados y reprobados en los 3 cursos, para ver el panel, los gráficos y los filtros funcionando. Se pueden quitar con un clic sin afectar a los estudiantes reales.</p>
+          <div class="actions">
+            <button class="btn pink" id="demoLoad" type="button">🧪 Cargar datos de demostración</button>
+            <button class="btn red" id="demoClear" type="button">🗑 Quitar datos de demostración</button>
+          </div>
+          <p class="msg" id="demoMsg" aria-live="polite"></p>
+        </div>
+
+        <div class="panel center">
+          <h3>💾 Respaldo de la base de datos</h3>
+          <p class="hint">«Excel» descarga los resultados de los exámenes. «JSON» guarda TODO (usuarios, resultados, progreso, solicitudes y bitácora) y sirve para restaurar los datos en otro navegador. El JSON contiene contraseñas cifradas: guárdalo en un lugar privado.</p>
+          <div class="actions">
+            <button class="btn cyan" id="csvAll" type="button">⬇ Excel (CSV)</button>
+            <button class="btn yellow" id="jsonExport" type="button">⬇ JSON (respaldo completo)</button>
+            <button class="btn pink" id="jsonImport" type="button">⬆ Restaurar desde JSON</button>
+            <input type="file" id="jsonFile" accept="application/json,.json" class="hidden">
+          </div>
+          <p class="msg" id="bkMsg"></p>
+        </div>
+
+        <div class="actions">
+          <button class="btn red" id="resetBtn" type="button">Limpiar todos los resultados</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer>© 2026 Instituto Retro Byte · Misión · Visión · Proyecto Programación II</footer>
+  <script src="programa.js"></script>
+</body>
+</html>
